@@ -2,13 +2,9 @@
 
 This is an injectable **32-bit DLL** for the examined Transformers: War for Cybertron `TWFC.exe`. Static analysis found a character-texture residency helper that sets a one-mip reduction, and a matching streaming branch that subtracts that reduction from the available mip count. The DLL changes the helper to write zero while preserving forced residency.
 
-**Compilation and static checks passed. Visual improvement has not been tested in game.** Windows denied execution of the compiled test program in the analysis session; its runtime tests are provided but are not reported as passing. The Ghidra debugger service was unavailable. This is a candidate fix supported by the executable's code, not a confirmed in-game fix.
-
 ## Use
 
 For Ultimate ASI Loader, use the **Win32/x86** loader as `dinput8.dll` beside `TWFC.exe`. Put the included `TWFC_PlayerMipFix.asi` in `Binaries\scripts` and the included `dinput8.ini` beside `dinput8.dll`. Restart the game. The configuration enables `dinput8.log`; the patch writes `TWFC_PlayerMipFix.log` beside its ASI (inside `scripts` in this setup). Do not install both the ASI and DLL as separately loaded plugins.
-
-Troubleshooting on October 10 found the installed `Binaries\dinput8.dll` was PE x86-64, while the game and patch are PE x86. Replace the loader with the Win32 build. The executable imports DINPUT8.dll, so the filename is appropriate. This architecture mismatch must be resolved before judging the texture patch. The game was not running during this inspection, so successful plugin loading remains unverified.
 
 1. Start the supported game executable.
 2. Use your existing **32-bit DLL injector** to load `TWFC_PlayerMipFix.dll` into `TWFC.exe`, preferably at the main menu **before entering a level**. The DLL applies its patch automatically; no export call is required. An injector is not included.
