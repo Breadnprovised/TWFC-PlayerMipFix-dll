@@ -1,0 +1,43 @@
+{
+  "build": "MSVC x86 /W4 /WX successful",
+  "signatures": [
+    {
+      "signature": "material",
+      "rva": "0x2ec1b1",
+      "matched": true
+    },
+    {
+      "signature": "texture",
+      "rva": "0x2ec220",
+      "matched": true
+    },
+    {
+      "signature": "zeroRegs",
+      "rva": "0x2ec12a",
+      "matched": true
+    },
+    {
+      "signature": "oneReg",
+      "rva": "0x2ec153",
+      "matched": true
+    },
+    {
+      "signature": "playerCall",
+      "rva": "0x2a09c7",
+      "matched": true
+    },
+    {
+      "signature": "forcedMips",
+      "rva": "0xc4202f",
+      "matched": true
+    }
+  ],
+  "dll_machine": "PE32 x86",
+  "exports": [
+    "ApplyFix",
+    "GetFixStatus",
+    "RestoreFix"
+  ],
+  "runtime_tests": "Not executed: Windows denied starting test program",
+  "in_game_test": "Not performed"
+}

@@ -1,0 +1,5 @@
+LIBRARY TWFC_PlayerMipFix
+EXPORTS
+    ApplyFix=_ApplyFix@0
+    RestoreFix=_RestoreFix@0
+    GetFixStatus=_GetFixStatus@0
