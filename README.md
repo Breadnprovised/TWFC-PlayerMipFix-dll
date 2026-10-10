@@ -1,21 +1,10 @@
 # TWFC player mip fix — experimental
 
-This is an injectable **32-bit DLL** for the examined Transformers: War for Cybertron `TWFC.exe`. Static analysis found a character-texture residency helper that sets a one-mip reduction, and a matching streaming branch that subtracts that reduction from the available mip count. The DLL changes the helper to write zero while preserving forced residency.
+This is an injectable **32-bit DLL** for Transformers: War for Cybertron `TWFC.exe`. Static analysis found a character-texture residency helper that sets a one-mip reduction, and a matching streaming branch that subtracts that reduction from the available mip count. The DLL changes the helper to write zero while preserving forced residency.
 
 ## Use
 
-For Ultimate ASI Loader, use the **Win32/x86** loader as `dinput8.dll` beside `TWFC.exe`. Put the included `TWFC_PlayerMipFix.asi` in `Binaries\scripts` and the included `dinput8.ini` beside `dinput8.dll`. Restart the game. The configuration enables `dinput8.log`; the patch writes `TWFC_PlayerMipFix.log` beside its ASI (inside `scripts` in this setup). Do not install both the ASI and DLL as separately loaded plugins.
-
-1. Start the supported game executable.
-2. Use your existing **32-bit DLL injector** to load `TWFC_PlayerMipFix.dll` into `TWFC.exe`, preferably at the main menu **before entering a level**. The DLL applies its patch automatically; no export call is required. An injector is not included.
-3. Check `TWFC_PlayerMipFix.log` beside the DLL. Look for `apply: Success (code 0)`. A failed log-file write does not prevent the patch; the same message is also sent to Windows debug output.
-4. Enter a level and compare the player character with the unmodified game under identical settings. Test both robot and vehicle forms, and respawning/changing characters.
-
-If injected after textures were already marked resident, **return to the menu and enter a fresh level, or respawn/change character** so the game's helper runs again. The DLL changes future field assignments; it does not rewrite existing texture objects or invoke engine functions from its worker thread. If those actions do not refresh the textures, restart and inject before entering a level.
-
-If it has no effect despite a successful application and fresh character load, the static finding is insufficient to explain your observed rendering. Useful next evidence is a live inspection of the character texture's total/requested/resident mip counts and the reduction field before and after the patch.
-
-The patch is applied to process memory only. It does not edit the executable, assets, configuration, or texture groups. Engine limits on available/cooked mips and cached LOD bias remain in effect. Only textures processed by these game-specific residency helpers receive the corrected field value; this can also include a character preview or another character explicitly preloaded through the same helper. It is not an object-identity filter exclusively for the player.
+For Ultimate ASI Loader, use the **Win32/x86** loader as `dinput8.dll` beside `TWFC.exe`. Put the included `TWFC_PlayerMipFix.asi` in `Binaries\scripts`. The patch writes `TWFC_PlayerMipFix.log` beside its ASI (inside `scripts` in this setup).
 
 ## Build
 
